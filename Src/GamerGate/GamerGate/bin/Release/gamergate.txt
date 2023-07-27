@@ -1,0 +1,841 @@
+<head>
+    <meta charset="fr_FR.UTF-8">
+
+    <meta name="author" content="MICHAEL ANDRE FRANIATTE">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>gamergate by michael franiatte</title>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+	<style>
+		#dialogoverlay {
+			display: none;
+			opacity: .8;
+			position: fixed;
+			top: 0px;
+			left: 0px;
+			background: #FFF;
+			width: 100%;
+			z-index: 10;
+		}
+
+		#dialogbox {
+			display: none;
+			position: fixed;
+			background: #000;
+			border-radius: 7px;
+			width: 550px;
+			z-index: 10;
+		}
+
+			#dialogbox > div {
+				background: #FFF;
+				margin: 8px;
+			}
+
+				#dialogbox > div > #dialogboxhead {
+					background: #666;
+					font-size: 19px;
+					padding: 10px;
+					color: #CCC;
+				}
+
+				#dialogbox > div > #dialogboxbody {
+					background: #333;
+					padding: 20px;
+					color: #FFF;
+				}
+
+				#dialogbox > div > #dialogboxfoot {
+					background: #666;
+					padding: 10px;
+					text-align: right;
+				}
+				#dialogboxbody input {
+					width: 485px;
+				}
+	</style>
+    <style>
+        body {
+            background-color: black;
+            height: 100%;
+            background-image: url('background.gif');
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            background-position: center;
+            color: white;
+            overflow-x: hidden;
+        }
+        #tool {
+	    position: relative;
+            padding: 5px;
+	    top: -55px;
+	    height: 0px;
+	    transition: top 0.3s;
+        }
+        .games {
+            padding: 35px;
+        }
+        .games div {
+            padding: 5px;
+        }
+        .games div div {
+	    cursor: pointer;
+        }
+	.switchediting {
+	    cursor: pointer;
+        }
+        #page div div.switchediting {
+	    display: none;
+	    cursor: pointer;
+        }
+	#wait {
+	    	display: none;
+    		position:fixed;
+    		padding:0;
+    		margin:0;
+    		top:0;
+    		left:0;
+    		width: 100%;
+    		height: 100%;
+    		background:rgba(0,0,0,0.9);
+	}
+	#wait h1 {
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -50%);
+		position: absolute;
+	}
+
+@keyframes fade_in_show {
+     0% {
+          opacity: 0;
+          transform: scale(0)
+     }
+
+     100% {
+          opacity: 1;
+          transform: scale(1)
+     }
+}
+
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: #444;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #888;
+}
+
+    ::-webkit-scrollbar-thumb:hover {
+        background: #eee;
+    }
+    </style>
+<style>
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font: 16px Arial;  
+}
+
+.autocomplete {
+  position: relative;
+  display: inline-block;
+}
+
+input {
+  border: 1px solid transparent;
+  background-color: #f1f1f1;
+  padding: 10px;
+  font-size: 16px;
+}
+
+input[type=text] {
+  background-color: #f1f1f1;
+  width: 100%;
+}
+
+input[type=submit] {
+  background-color: grey;
+  color: #fff;
+  cursor: pointer;
+}
+
+.autocomplete-items {
+  position: absolute;
+  border: 1px solid #d4d4d4;
+  border-bottom: none;
+  border-top: none;
+  z-index: 99;
+  top: 100%;
+  left: 0;
+  right: 0;
+}
+
+.autocomplete-items div {
+  padding: 10px;
+  cursor: pointer;
+  background-color: #000; 
+  border-bottom: 1px solid #d4d4d4; 
+}
+
+.autocomplete-items div:hover {
+  background-color: #444; 
+}
+
+.autocomplete-active {
+  background-color: grey !important; 
+  color: #666; 
+}
+
+</style>
+
+<style>
+
+.switchimage {
+   -webkit-column-count: 2;
+   -webkit-column-gap:   0px;
+   -moz-column-count:    2;
+   -moz-column-gap:      0px;
+   column-count:         2;
+   column-gap:           0px;
+   position: relative;
+   left: 40%;
+   top: 10px;
+}
+
+.switchimage img {
+	position: relative;
+	cursor: pointer;
+	width: 500px;
+	height: auto;
+}
+
+a.darken {
+    display: inline-block;
+    background: black;
+    padding: 0;
+    position:relative;
+	
+}
+
+a.darken img {
+    display: block;
+    -webkit-transition: all 0.2s linear;
+       -moz-transition: all 0.2s linear;
+        -ms-transition: all 0.2s linear;
+         -o-transition: all 0.2s linear;
+            transition: all 0.2s linear;
+}
+
+a.darken:hover img {
+    opacity: 0.3;           
+}
+
+a.darken span {
+    visibility:hidden; 
+    font-size:16px;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      -webkit-transform: translate(-50%, -50%);
+      transform: translate(-50%, -50%);
+      line-height: 100%;
+}
+
+a.darken:hover span{color:#fff; visibility:visible;
+    -webkit-transition: all 0.2s linear;
+       -moz-transition: all 0.2s linear;
+        -ms-transition: all 0.2s linear;
+         -o-transition: all 0.2s linear;
+            transition: all 0.2s linear;
+}
+
+</style>
+
+</head>
+<body>
+	<div id="wait" style="display: none;">
+    		<h1>Wait...</h1>
+	</div>
+
+	<div id="dialogoverlay" style="display: none; height: 661px;"></div>
+	<div id="dialogbox" style="left: 217px; top: 100px; display: none;">
+		<div>
+			<div id="dialogboxhead">A value is required</div>
+			<div id="dialogboxbody">Please enter a game image link:<br><input id="prompt_value1"></div>
+			<div id="dialogboxfoot"><button onclick="Prompt.ok('getPromptImageName')">OK</button> <button onclick="Prompt.cancel()">Cancel</button></div>
+		</div>
+	</div>
+
+    <div id="tool">
+    	<input type="submit" onclick="search();" value="Search" style="float:left;margin-right:5px;" class="defaultview">
+    	<div class="autocomplete" style="width:300px;">
+        	<input id="search" type="text" placeholder="search" style="float:left;" class="defaultview">
+    	</div>
+    	<input type="submit" onclick="view();" value="View" style="float:right;">
+    	<input type="submit" onclick="save();" value="Save" style="float:right;margin-right:5px;" class="defaultview">
+    	<input type="submit" onclick="edit();" value="Edit" style="float:right;margin-right:5px;" class="defaultview">
+    </div>
+
+    <div id="page">
+		<div class="games grid-container">
+		<div onclick="add(this)" class="switchediting" style="display: none;">+</div>
+        	<div class="sortme grid-item"><div onclick="showImageGame(this)" class="game">Celeste</div><div onclick="substract(this)" class="switchediting" style="display: none;">-</div><div style="display: inline-block;" class="switchimage"><a onclick="playGame(&quot;celeste.mp3.mp3&quot;)" class="darken"><img src="https://cdn.cloudflare.steamstatic.com/steam/apps/504230/capsule_616x353.jpg"><span>▶</span></a></div></div><div class="sortme grid-item"><div onclick="showImageGame(this)" class="game">Control</div><div onclick="substract(this)" class="switchediting" style="display: none;">-</div><div style="display: none;" class="switchimage"><a onclick="playGame(&quot;control.mp3.mp3&quot;)" class="darken"><img src="https://cdn1.epicgames.com/calluna/offer/2560x1440_CUE_OfferAsset-2560x1440-d4f5cbd300d45b7c510bc962028f8071.jpg"><span>▶</span></a></div></div><div class="sortme grid-item"><div onclick="showImageGame(this)" class="game">Forza Horizon 5</div><div onclick="substract(this)" class="switchediting" style="display: none;">-</div><div style="display: none;" class="switchimage"><a onclick="playGame(&quot;forza.mp3.mp3&quot;)" class="darken"><img src="https://as01.epimg.net/meristation/imagenes/2021/11/07/noticias/1636275547_705564_1636275608_noticia_normal.jpg"><span>▶</span></a></div></div><div class="sortme grid-item"><div onclick="showImageGame(this)" class="game">Horizon Zero Dawn</div><div onclick="substract(this)" class="switchediting" style="display: none;">-</div><div style="display: none;" class="switchimage"><a onclick="playGame(&quot;Phoenix1.mp3&quot;)" class="darken"><img src="https://www.begeek.fr/wp-content/uploads/2022/02/Horizon-Zero-Dawn-PS4-PC-Sony-Interactive-Entertainment.jpg"><span>▶</span></a></div></div><div class="sortme grid-item"><div onclick="showImageGame(this)" class="game">Hotline Miami</div><div onclick="substract(this)" class="switchediting" style="display: none;">-</div><div style="display: none;" class="switchimage"><a onclick="playGame(&quot;Phoenix1.mp3&quot;)" class="darken"><img src="https://cdn.akamai.steamstatic.com/steam/apps/219150/capsule_616x353.jpg?t=1622219177"><span>▶</span></a></div></div><div class="sortme grid-item"><div onclick="showImageGame(this)" class="game">Hotline Miami: Wrong Number</div><div onclick="substract(this)" class="switchediting" style="display: none;">-</div><div style="display: none;" class="switchimage"><a onclick="playGame(&quot;Phoenix1.mp3&quot;)" class="darken"><img src="https://images.gog-statics.com/5baf3e885b73a7a64406ff0fc5cd1c22840c0d9e100ae715d3bb4a3c080e9d23_product_card_v2_mobile_slider_639.jpg"><span>▶</span></a></div></div><div class="sortme grid-item"><div onclick="showImageGame(this)" class="game">Metroid Dread</div><div onclick="substract(this)" class="switchediting" style="display: none;">-</div><div style="display: none;" class="switchimage"><a onclick="playGame(&quot;metroid.mp3.mp3&quot;)" class="darken"><img src="https://fs-prod-cdn.nintendo-europe.com/media/images/10_share_images/games_15/nintendo_switch_4/H2x1_NSwitch_MetroidDread.jpg"><span>▶</span></a></div></div><div class="sortme grid-item"><div onclick="showImageGame(this)" class="game">Watch Dogs Legion</div><div onclick="substract(this)" class="switchediting" style="display: none;">-</div><div style="display: none;" class="switchimage"><a onclick="playGame(&quot;watchdogs.mp3.mp3&quot;)" class="darken"><img src="https://www.dualshockers.com/static/uploads/2020/10/watch-dogs-legion-poster-art.jpg"><span>▶</span></a></div></div><div class="sortme grid-item"><div onclick="showImageGame(this)" class="game">Zelda Link's Awakening</div><div onclick="substract(this)" class="switchediting" style="display: none;">-</div><div style="display: none;" class="switchimage"><a onclick="playGame(&quot;zelda.mp3.mp3&quot;)" class="darken"><img src="https://fs-prod-cdn.nintendo-europe.com/media/images/10_share_images/games_15/nintendo_switch_4/H2x1_NSwitch_TheLegendOfZeldaLinksAwakening_image1600w.jpg"><span>▶</span></a></div></div></div>
+    </div>
+    <script>
+	$('.sortme').sort(function(a, b) {
+  		if (a.children['0'].textContent < b.children['0'].textContent) {
+    			return -1;
+  		} 
+		else {
+    			return 1;
+  		}
+	}).appendTo('.games');
+    </script>
+    <script>
+	var toolbool = false;
+	var elementtoadd = '';
+	var gamename = '';
+	var filename = '';
+	var imagename = '';
+	function getPromptGameName(val) {
+		gamename = val;
+  		if (gamename == null | gamename == "") {
+    			return;
+  		} 
+		setTimeout(promptFunc, 1000);
+	}
+	function promptFunc() {
+		Prompt.render('Please enter a file shortcut link:','getPromptFileName');
+	}
+	function getPromptFileName(val) {
+		filename = val;
+  		if (filename == null | filename == "") {
+    			return;
+  		} 
+		setTimeout(addImageFunc, 1000);
+	}
+	function addImageFunc() {
+		Prompt.render('Please enter a game image link:','getPromptImageName');
+	}
+	function getPromptImageName(val) {
+		imagename = val;
+  		if (imagename == null | imagename == "") {
+    			return;
+  		} 
+		setTimeout(addFinalFunc, 1000);
+	}
+	function addFinalFunc() {
+		addFinal();
+	}
+	function addFinal() {
+		var element = elementtoadd;
+		searches.push(gamename);
+		var domstring = `<div class='sortme'><div onclick="showImageGame(this)" class="game">` + gamename + `</div><div onclick="substract(this)" class="switchediting">-</div><div style="display: none;" class="switchimage"><a onclick="playGame(&quot;` + filename + `.mp3&quot;)" class="darken"><img src='` + imagename + `'><span>&#9654;</span></a></div></div>`;
+		element.parentNode.innerHTML += domstring;
+		var elems = document.querySelectorAll('.switchediting');
+		for (var i=0;i<elems.length;i+=1){
+			elems[i].style.display = 'inline-block';
+		}
+	}
+	function add(element) {
+		elementtoadd = element;
+		Prompt.render('Please enter a game name:','getPromptGameName');
+	}
+	function substract(element) {
+		var gamename = element.parentNode.firstChild.firstChild.innerHTML;
+		const index = searches.indexOf(gamename);
+		if (index > -1) {
+  			searches.splice(index, 1);
+		}
+		element.parentNode.remove();
+	}
+
+	var refreshIntervalId = setInterval(loopGames, 4000);
+
+	var editbool = false;
+
+	function edit() {
+		var elems = document.querySelectorAll('.switchediting');
+		if (editbool) {
+			for (var i=0;i<elems.length;i+=1){
+				elems[i].style.display = 'none';
+			}
+			editbool = false;
+			loopGames();
+			clearInterval(refreshIntervalId);
+			refreshIntervalId = setInterval(loopGames, 4000);
+		}
+		else {
+			for (var i=0;i<elems.length;i+=1){
+				elems[i].style.display = 'inline-block';
+			}
+			editbool = true;
+		}
+	}
+
+	var imagebool = false;
+
+	function showImageGame(elem) {
+		var elems = document.querySelectorAll('.switchimage');
+		for (var i=0;i<elems.length;i+=1){
+			elems[i].style.display = 'none';
+		}
+		if (imagebool) {
+			var next = elem.nextElementSibling;
+			next = next.nextElementSibling;
+			next.style.display = 'none';
+			imagebool = false;
+			loopGames();
+			clearInterval(refreshIntervalId);
+			refreshIntervalId = setInterval(loopGames, 4000);
+		}
+		else {
+			var next = elem.nextElementSibling;
+			next = next.nextElementSibling;
+			next.style.display = 'inline-block';
+			next.style.animation = 'fade_in_show 0.5s';
+			imagebool = true;
+		}
+	}
+
+	var incloopgames = 0;
+
+	loopGames();
+
+	function loopGames()
+	{
+		if (!editbool & !imagebool & !toolbool & !viewbool) {
+			var elems = document.querySelectorAll('.switchimage');
+			for (var i=0;i<elems.length;i+=1){
+				elems[i].style.display = 'none';
+				if (i == incloopgames) {
+					elems[i].style.display = 'inline-block';
+					elems[i].style.animation = 'fade_in_show 0.5s';
+					var offset = elems[i].parentNode.getBoundingClientRect();
+                			$('body').animate({ scrollTop: offset.top }, 1000);
+				}
+			}
+			incloopgames++;
+			if (incloopgames >= elems.length) {
+				incloopgames = 0;
+			}
+		}
+	}
+    </script>
+    <script>
+        var elem = document.getElementById('search');
+        var el = document.getElementById("page");
+        var originalHtml = el.innerHTML;
+	var stringsearches;
+        function search() {
+                var searchword = elem.value;
+        	if (searchword != '') {
+        		var newHtml = originalHtml.replace(new RegExp(searchword, "g"), searchword.fontcolor("orange"));
+        		el.innerHTML = newHtml;
+			var elems = document.querySelectorAll('font');
+			var offset = elems[0].parentNode.parentNode.getBoundingClientRect();
+                	$('body').animate({ scrollTop: offset.top }, 1000);
+			elems[0].parentNode.click();
+       	 	}
+        	else {
+    			setTimeout(function() {
+    				document.querySelector('#wait').style.display = 'block';
+    			}, 0);
+    			setTimeout(function() {
+    				deleteSearchWords();
+    			}, 100);
+       	 	}
+        }
+        function save() {
+    		setTimeout(function() {
+    			document.querySelector('#wait').style.display = 'block';
+    		}, 0);
+    		setTimeout(function() {
+			deleteSearchWords();
+			var markup = document.documentElement.innerHTML;
+			saveDocument(markup, stringsearches);
+    		}, 100);
+	}
+	function deleteSearchWords() {
+		stringsearches = '[';
+		searches.forEach(function(search) {
+			if (search != "") {
+				stringsearches += '"' + search + '", ';
+				originalHtml = el.innerHTML;
+        			var newHtml = originalHtml.replace(new RegExp(search.fontcolor("orange"), "g"), search);
+        			el.innerHTML = newHtml;
+			}
+		});
+    		document.querySelector('#wait').style.display = 'none';
+	}
+	function playGame(game) {
+            execFile(game);
+	}
+    </script>
+    <script>
+
+var wd = 2;
+var wu = 2;
+
+var ontoolbool = false;
+
+$("#tool").mouseover(function(){
+  ontoolbool = true;
+});
+
+$("#tool").mouseleave(function(){
+  ontoolbool = false;
+});
+
+$(document).on("mousemove", function(event) {
+    mouseOnTop(event.pageY);
+});
+
+function mouseOnTop(y) {
+    if (wd == 1) {
+	if (!viewbool) {
+        	document.getElementById("tool").style.top = "0px";
+        	document.getElementById("tool").style.height = "55px";
+	}
+	else {
+        	document.getElementById("tool").style.display = "block";
+	}
+	toolbool = true;
+    }
+    if (wu == 1) {
+	if (!viewbool) {
+        	document.getElementById("tool").style.top = "-55px";
+        	document.getElementById("tool").style.height = "0px";
+	}
+	else {
+        	document.getElementById("tool").style.top = "0px";
+        	document.getElementById("tool").style.height = "55px";
+        	document.getElementById("tool").style.display = "none";
+	}
+	toolbool = false;
+	loopGames();
+	clearInterval(refreshIntervalId);
+	refreshIntervalId = setInterval(loopGames, 4000);
+    }
+    var windowscrolly = window.scrollY;
+    if ((y <= 50 & windowscrolly == 0) | ontoolbool)
+    {
+	    if (wd <= 1) {
+		    wd = wd + 1;
+	    }
+	    wu = 0;
+    }
+    else
+    {
+	    if (wu <= 1) {
+		    wu = wu + 1;
+	    }
+	    wd = 0;
+    }
+}
+    </script>
+<script>
+
+var viewbool = false;
+
+function view() {
+	if (viewbool) {
+		$('.defaultview').css({
+    			'display': 'block'
+		});
+		$(".grid-container").addClass("games");
+		$(".grid-item").addClass("sortme");
+		$('.grid-container').css({
+  			'display': '',
+  			'grid-template-columns': '',
+            		'padding': 'auto'
+		});
+		$('.grid-item').css({
+  			'text-align': '',
+  			'padding': '',
+  			'object-fit': '',
+  			'min-height': ''
+		});
+		$(".games").removeClass("grid-container");
+		$(".sortme").removeClass("grid-item");
+		$('.switchimage img').css({
+			'position': 'relative',
+			'cursor': 'pointer',
+			'width': '500px',
+			'height': 'auto',
+  			'object-fit': '',
+  			'min-height': '',
+			'animation': 'fade_in_show 0.5s'
+		});
+		$('.switchimage').css({
+			'-webkit-column-count': '2',
+			'-webkit-column-gap': '0px',
+			'-moz-column-count': '2',
+			'-moz-column-gap': '0px',
+			'column-count': '2',
+			'column-gap': '0px',
+			'position': 'relative',
+			'left': '40%',
+			'top': '10px',
+			'width': '500px'
+		});
+		$('.game').css({
+    			'display': 'block'
+		});
+		viewbool = false;
+		loopGames();
+		clearInterval(refreshIntervalId);
+		refreshIntervalId = setInterval(loopGames, 4000);
+	}
+	else
+	{
+		$('.defaultview').css({
+    			'display': 'none'
+		});
+		$(".games").addClass("grid-container");
+		$(".sortme").addClass("grid-item");
+		$('.grid-container').css({
+  			'display': 'grid',
+  			'grid-template-columns': 'auto auto auto auto',
+            		'padding': 'auto'
+		});
+		$('.grid-item').css({
+  			'text-align': 'center',
+  			'padding': '5px',
+  			'object-fit': 'cover',
+  			'min-height': '125px'
+		});
+		$(".grid-container").removeClass("games");
+		$(".grid-item").removeClass("sortme");
+		$('.switchimage img').css({
+			'position': 'relative',
+			'cursor': 'pointer',
+			'width': '200px',
+			'height': 'auto',
+  			'object-fit': 'cover',
+  			'min-height': '125px',
+			'animation': 'fade_in_show 0.5s'
+		});
+		$('.switchimage').css({
+			'-webkit-column-count': '2',
+			'-webkit-column-gap': '0px',
+			'-moz-column-count': '2',
+			'-moz-column-gap': '0px',
+			'column-count': '2',
+			'column-gap': '0px',
+			'position': 'relative',
+			'left': '0%',
+			'top': '0px',
+			'width': '200px'
+		});
+		$('.game').css({
+    			'display': 'none'
+		});
+		var elems = document.querySelectorAll('.switchimage');
+		for (var i=0;i<elems.length;i+=1){
+			elems[i].style.display = 'inline-block';
+		}
+		viewbool = true;
+	}
+}
+</script>
+<script>
+function autocomplete(inp, arr) {
+  /*the autocomplete function takes two arguments,
+  the text field element and an array of possible autocompleted values:*/
+  var currentFocus;
+  /*execute a function when someone writes in the text field:*/
+  inp.addEventListener("input", function(e) {
+      var a, b, i, val = this.value;
+      /*close any already open lists of autocompleted values*/
+      closeAllLists();
+      if (!val) { return false;}
+      currentFocus = -1;
+      /*create a DIV element that will contain the items (values):*/
+      a = document.createElement("DIV");
+      a.setAttribute("id", this.id + "autocomplete-list");
+      a.setAttribute("class", "autocomplete-items");
+      /*append the DIV element as a child of the autocomplete container:*/
+      this.parentNode.appendChild(a);
+      /*for each item in the array...*/
+      for (i = 0; i < arr.length; i++) {
+        /*check if the item starts with the same letters as the text field value:*/
+        if (arr[i].substr(0, val.length).toUpperCase() == val.toUpperCase()) {
+          /*create a DIV element for each matching element:*/
+          b = document.createElement("DIV");
+          /*make the matching letters bold:*/
+          b.innerHTML = "<strong>" + arr[i].substr(0, val.length) + "</strong>";
+          b.innerHTML += arr[i].substr(val.length);
+          /*insert a input field that will hold the current array item's value:*/
+          b.innerHTML += "<input type='hidden' value='" + arr[i] + "'>";
+          /*execute a function when someone clicks on the item value (DIV element):*/
+          b.addEventListener("click", function(e) {
+              /*insert the value for the autocomplete text field:*/
+              inp.value = this.getElementsByTagName("input")[0].value;
+              /*close the list of autocompleted values,
+              (or any other open lists of autocompleted values:*/
+              closeAllLists();
+          });
+          a.appendChild(b);
+        }
+      }
+  });
+  /*execute a function presses a key on the keyboard:*/
+  inp.addEventListener("keydown", function(e) {
+        	if (e.keyCode == 13) {
+        		search();
+        	}
+      var x = document.getElementById(this.id + "autocomplete-list");
+      if (x) x = x.getElementsByTagName("div");
+      if (e.keyCode == 40) {
+        /*If the arrow DOWN key is pressed,
+        increase the currentFocus variable:*/
+        currentFocus++;
+        /*and and make the current item more visible:*/
+        addActive(x);
+      } else if (e.keyCode == 38) { //up
+        /*If the arrow UP key is pressed,
+        decrease the currentFocus variable:*/
+        currentFocus--;
+        /*and and make the current item more visible:*/
+        addActive(x);
+      } else if (e.keyCode == 13) {
+        /*If the ENTER key is pressed, prevent the form from being submitted,*/
+        e.preventDefault();
+        if (currentFocus > -1) {
+          /*and simulate a click on the "active" item:*/
+          if (x) x[currentFocus].click();
+        }
+      }
+  });
+  function addActive(x) {
+    /*a function to classify an item as "active":*/
+    if (!x) return false;
+    /*start by removing the "active" class on all items:*/
+    removeActive(x);
+    if (currentFocus >= x.length) currentFocus = 0;
+    if (currentFocus < 0) currentFocus = (x.length - 1);
+    /*add class "autocomplete-active":*/
+    x[currentFocus].classList.add("autocomplete-active");
+  }
+  function removeActive(x) {
+    /*a function to remove the "active" class from all autocomplete items:*/
+    for (var i = 0; i < x.length; i++) {
+      x[i].classList.remove("autocomplete-active");
+    }
+  }
+  function closeAllLists(elmnt) {
+    /*close all autocomplete lists in the document,
+    except the one passed as an argument:*/
+    var x = document.getElementsByClassName("autocomplete-items");
+    for (var i = 0; i < x.length; i++) {
+      if (elmnt != x[i] && elmnt != inp) {
+        x[i].parentNode.removeChild(x[i]);
+      }
+    }
+  }
+  /*execute a function when someone clicks in the document:*/
+  document.addEventListener("click", function (e) {
+      closeAllLists(e.target);
+  });
+}
+
+/*An array containing all the country names in the world:*/
+var searches = ["Horizon Zero Dawn", "Hotline Miami", "Hotline Miami: Wrong Number", "Celeste", "Metroid Dread", "Control", "Zelda Link's Awakening", "Watch Dogs Legion", "Forza Horizon 5", ""];
+
+/*initiate the autocomplete function on the "myInput" element, and pass along the countries array as possible autocomplete values:*/
+autocomplete(document.getElementById("search"), searches);
+
+</script>
+
+	<script>
+		function CustomAlert(){
+		this.render = function(dialog){
+		var winW = window.innerWidth;
+		var winH = window.innerHeight;
+		var dialogoverlay = document.getElementById('dialogoverlay');
+		var dialogbox = document.getElementById('dialogbox');
+		dialogoverlay.style.display = "block";
+		dialogoverlay.style.height = winH+"px";
+		dialogbox.style.left = (winW/2) - (550 * .5)+"px";
+		dialogbox.style.top = "100px";
+		dialogbox.style.display = "block";
+		document.getElementById('dialogboxhead').innerHTML = "Acknowledge This Message";
+		document.getElementById('dialogboxbody').innerHTML = dialog;
+		document.getElementById('dialogboxfoot').innerHTML = '<button onclick="Alert.ok()">OK</button>';
+		}
+		this.ok = function(){
+		document.getElementById('dialogbox').style.display = "none";
+		document.getElementById('dialogoverlay').style.display = "none";
+		}
+		}
+		var Alert = new CustomAlert();
+		function CustomConfirm(){
+		this.render = function(dialog,op,id){
+		var winW = window.innerWidth;
+		var winH = window.innerHeight;
+		var dialogoverlay = document.getElementById('dialogoverlay');
+		var dialogbox = document.getElementById('dialogbox');
+		dialogoverlay.style.display = "block";
+		dialogoverlay.style.height = winH+"px";
+		dialogbox.style.left = (winW/2) - (550 * .5)+"px";
+		dialogbox.style.top = "100px";
+		dialogbox.style.display = "block";
+
+		document.getElementById('dialogboxhead').innerHTML = "Confirm that action";
+		document.getElementById('dialogboxbody').innerHTML = dialog;
+		document.getElementById('dialogboxfoot').innerHTML = '<button onclick="Confirm.yes(\''+op+'\',\''+id+'\')">Yes</button> <button onclick="Confirm.no()">No</button>';
+		}
+		this.no = function(){
+		document.getElementById('dialogbox').style.display = "none";
+		document.getElementById('dialogoverlay').style.display = "none";
+		}
+		this.yes = function(op,id){
+		if(op == "delete_post"){
+		deletePost(id);
+		}
+		document.getElementById('dialogbox').style.display = "none";
+		document.getElementById('dialogoverlay').style.display = "none";
+		}
+		}
+		var Confirm = new CustomConfirm();
+		function CustomPrompt(){
+		this.render = function(dialog,func){
+		var winW = window.innerWidth;
+		var winH = window.innerHeight;
+		var dialogoverlay = document.getElementById('dialogoverlay');
+		var dialogbox = document.getElementById('dialogbox');
+		dialogoverlay.style.display = "block";
+		dialogoverlay.style.height = winH+"px";
+		dialogbox.style.left = (winW/2) - (550 * .5)+"px";
+		dialogbox.style.top = "100px";
+		dialogbox.style.display = "block";
+		document.getElementById('dialogboxhead').innerHTML = "A value is required";
+		document.getElementById('dialogboxbody').innerHTML = dialog;
+		document.getElementById('dialogboxbody').innerHTML += '<br><input id="prompt_value1">';
+		document.getElementById('dialogboxfoot').innerHTML = '<button onclick="Prompt.ok(\''+func+'\')">OK</button> <button onclick="Prompt.cancel()">Cancel</button>';
+		}
+		this.cancel = function(){
+		document.getElementById('dialogbox').style.display = "none";
+		document.getElementById('dialogoverlay').style.display = "none";
+		}
+		this.ok = function(func){
+		var prompt_value1 = document.getElementById('prompt_value1').value;
+		window[func](prompt_value1);
+		document.getElementById('dialogbox').style.display = "none";
+		document.getElementById('dialogoverlay').style.display = "none";
+		}
+		}
+		var Prompt = new CustomPrompt();
+	</script>
+
+</body>

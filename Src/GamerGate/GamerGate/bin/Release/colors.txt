@@ -1,0 +1,6 @@
+// background color
+black
+// button colors
+grey
+// text color
+white
