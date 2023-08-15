@@ -1,1 +1,3 @@
-https://michaelandrefraniatte.github.io/gamergate
+﻿https://michaelandrefraniatte.github.io/gamergate  
+  
+https://github.com/michaelandrefraniatte  
