@@ -36,9 +36,32 @@ namespace GamerGate
             this.webView1.Engine.Options.DisableGPU = false;
             this.webView1.Engine.Options.DisableSpellChecker = true;
             this.webView1.Engine.Options.CustomUserAgent = "Mozilla/5.0 (Windows NT 6.1; WOW64; Trident/7.0; rv:11.0) like Gecko";
+            this.webView1.KeyDown += WebView1_KeyDown;
             LoadPage();
             webView1.RegisterJSExtensionFunction("saveDocument", new JSExtInvokeHandler(WebView_JSSaveDocument));
             webView1.RegisterJSExtensionFunction("execFile", new JSExtInvokeHandler(WebView_JSExecFile));
+        }
+        private void WebView1_KeyDown(object sender, EO.Base.UI.WndMsgEventArgs e)
+        {
+            Keys key = (Keys)e.WParam;
+            OnKeyDown(key);
+        }
+        private void Form1_KeyDown(object sender, KeyEventArgs e)
+        {
+            OnKeyDown(e.KeyData);
+        }
+        private void OnKeyDown(Keys keyData)
+        {
+            if (keyData == Keys.F1)
+            {
+                const string message = "• Author: Michaël André Franiatte.\n\r\n\r• Contact: michael.franiatte@gmail.com.\n\r\n\r• Publisher: https://github.com/michaelandrefraniatte.\n\r\n\r• Copyrights: All rights reserved, no permissions granted.\n\r\n\r• License: Not open source, not free of charge to use.";
+                const string caption = "About";
+                MessageBox.Show(message, caption, MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            if (keyData == Keys.Escape)
+            {
+                this.Close();
+            }
         }
         private void LoadPage()
         {
